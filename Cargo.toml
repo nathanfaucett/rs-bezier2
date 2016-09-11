@@ -1,0 +1,17 @@
+[package]
+name = "bezier2"
+version = "0.1.0"
+authors = ["nathanfaucett <nathanfaucett@gmail.com>"]
+
+keywords = ["bezier", "bezier2", "vector", "2"]
+description = "rust bezier vector 2 functions"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/nathanfaucett/rs-bezier2.git"
+homepage = "https://github.com/nathanfaucett/rs-bezier2"
+
+[dependencies.num]
+git = "https://github.com/nathanfaucett/rs-num.git"
+
+[dependencies.vec2]
+git = "https://github.com/nathanfaucett/rs-vec2.git"
