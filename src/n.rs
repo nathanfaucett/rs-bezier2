@@ -1,6 +1,10 @@
 use vec2;
 use num::Num;
 
+use cubic::cubic;
+use linear::linear;
+use quadratic::quadratic;
+
 
 #[inline(always)]
 pub fn n<'a, 'b, T: Num, N: Num>(
@@ -11,12 +15,19 @@ pub fn n<'a, 'b, T: Num, N: Num>(
     } else if t >= N::one() {
         vec2::copy(out, points[points.len() - 1])
     } else {
-        vec2::copy(out, &casteljau(points, points.len() - 1, 0, t.to_f64()))
+        match points.len() {
+            0 => vec2::zero(out),
+            1 => vec2::copy(out, points[0]),
+            2 => linear(out, points[0], points[1], t),
+            3 => quadratic(out, points[0], points[1], points[2], t),
+            4 => cubic(out, points[0], points[1], points[2], points[3], t),
+            n => vec2::copy(out, &casteljau(points, n - 1, 0, t.to_f64())),
+        }
     }
 }
 
 #[inline(always)]
-fn casteljau<'a, 'b, T: Num>(points: &'b [&'b [T; 2]], i: usize, j: usize, t: f64) -> [T; 2] {
+fn casteljau<'a, T: Num>(points: &'a [&'a [T; 2]], i: usize, j: usize, t: f64) -> [T; 2] {
     if i == 0_usize {
         vec2::clone(points[j])
     } else {
@@ -32,7 +43,7 @@ fn casteljau<'a, 'b, T: Num>(points: &'b [&'b [T; 2]], i: usize, j: usize, t: f6
 
 #[test]
 fn test_n() {
-    assert_eq!(n(&mut [0, 0], &[&[0, 0], &[0, 200], &[200, 200], &[200, 0]], 0.25), &[30, 112]);
+    assert_eq!(n(&mut [0, 0], &[&[0, 0], &[0, 200], &[200, 200], &[200, 0]], 0.25), &[31, 112]);
     assert_eq!(n(&mut [0, 0], &[&[0, 0], &[0, 200], &[200, 200], &[200, 0]], 0.5), &[100, 150]);
     assert_eq!(n(&mut [0, 0], &[&[0, 0], &[0, 200], &[200, 200], &[200, 0]], 0.75), &[168, 112]);
 }
