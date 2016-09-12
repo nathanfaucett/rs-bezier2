@@ -11,9 +11,15 @@ pub fn n<'a, 'b, T: Num, N: Num>(
     out: &'a mut [T; 2], points: &'b [&'b [T; 2]], t: N
 ) ->  &'a mut [T; 2] {
     if t <= N::zero() {
-        vec2::copy(out, points[0])
+        match points.len() {
+            0 => vec2::zero(out),
+            _ => vec2::copy(out, points[0]),
+        }
     } else if t >= N::one() {
-        vec2::copy(out, points[points.len() - 1])
+        match points.len() {
+            0 => vec2::zero(out),
+            n => vec2::copy(out, points[n - 1]),
+        }
     } else {
         match points.len() {
             0 => vec2::zero(out),
@@ -43,6 +49,10 @@ fn casteljau<'a, T: Num>(points: &'a [&'a [T; 2]], i: usize, j: usize, t: f64) -
 
 #[test]
 fn test_n() {
+    assert_eq!(n(&mut [0, 0], &[], 0), &[0, 0]);
+    assert_eq!(n(&mut [0, 0], &[], 0.5), &[0, 0]);
+    assert_eq!(n(&mut [0, 0], &[], 1), &[0, 0]);
+
     assert_eq!(n(&mut [0, 0], &[&[0, 0], &[0, 200], &[200, 200], &[200, 0]], 0.25), &[31, 112]);
     assert_eq!(n(&mut [0, 0], &[&[0, 0], &[0, 200], &[200, 200], &[200, 0]], 0.5), &[100, 150]);
     assert_eq!(n(&mut [0, 0], &[&[0, 0], &[0, 200], &[200, 200], &[200, 0]], 0.75), &[168, 112]);
