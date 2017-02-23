@@ -17,10 +17,14 @@ pub fn quadratic<'a, 'b, T: Num, N: Num>(
         let t_sq = t_f64 * t_f64;
 
         vec2::set(out,
-            T::from_f64(one_min_t_sq * p0[0].to_f64() + 2_f64 * one_min_t * t_f64 *
-                p1[0].to_f64() + t_sq * p2[0].to_f64()),
-            T::from_f64(one_min_t_sq * p0[1].to_f64() + 2_f64 * one_min_t * t_f64 *
-                p1[1].to_f64() + t_sq * p2[1].to_f64())
+            T::from_f64(
+                one_min_t_sq * p0[0].to_f64() + 2_f64 * one_min_t * t_f64 *
+                p1[0].to_f64() + t_sq * p2[0].to_f64()
+            ),
+            T::from_f64(
+                one_min_t_sq * p0[1].to_f64() + 2_f64 * one_min_t * t_f64 *
+                p1[1].to_f64() + t_sq * p2[1].to_f64()
+            )
         )
     }
 }
