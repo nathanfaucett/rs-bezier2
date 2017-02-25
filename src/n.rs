@@ -6,7 +6,7 @@ use linear::linear;
 use quadratic::quadratic;
 
 
-#[inline(always)]
+#[inline]
 pub fn n<'a, 'b, T: Num, N: Num>(
     out: &'a mut [T; 2], points: &'b [&'b [T; 2]], t: N
 ) ->  &'a mut [T; 2] {
@@ -32,7 +32,7 @@ pub fn n<'a, 'b, T: Num, N: Num>(
     }
 }
 
-#[inline(always)]
+#[inline]
 fn casteljau<'a, T: Num>(points: &'a [&'a [T; 2]], i: usize, j: usize, t: f64) -> [T; 2] {
     if i == 0_usize {
         vec2::clone(points[j])

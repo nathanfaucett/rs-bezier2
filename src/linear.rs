@@ -2,7 +2,7 @@ use vec2;
 use num::Num;
 
 
-#[inline(always)]
+#[inline]
 pub fn linear<'a, 'b, T: Num, N: Num>(
     out: &'a mut [T; 2], p0: &'b [T; 2], p1: &'b [T; 2], t: N
 ) ->  &'a mut [T; 2] {
