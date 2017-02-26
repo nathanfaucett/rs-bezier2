@@ -3,7 +3,7 @@ use num::Num;
 
 
 #[inline]
-pub fn cubic<'a, 'b, T: Num, N: Num>(
+pub fn cubic<'a, 'b, T: Copy + Num, N: Copy + Num>(
     out: &'a mut [T; 2], p0: &'b [T; 2], p1: &'b [T; 2], p2: &'b [T; 2], p3: &'b [T; 2], t: N
 ) ->  &'a mut [T; 2] {
     if t <= N::zero() {

@@ -7,7 +7,7 @@ use quadratic::quadratic;
 
 
 #[inline]
-pub fn n<'a, 'b, T: Num, N: Num>(
+pub fn n<'a, 'b, T: Copy + Num, N: Copy + Num>(
     out: &'a mut [T; 2], points: &'b [&'b [T; 2]], t: N
 ) ->  &'a mut [T; 2] {
     if t <= N::zero() {
@@ -33,7 +33,7 @@ pub fn n<'a, 'b, T: Num, N: Num>(
 }
 
 #[inline]
-fn casteljau<'a, T: Num>(points: &'a [&'a [T; 2]], i: usize, j: usize, t: f64) -> [T; 2] {
+fn casteljau<'a, T: Copy + Num>(points: &'a [&'a [T; 2]], i: usize, j: usize, t: f64) -> [T; 2] {
     if i == 0_usize {
         vec2::clone(points[j])
     } else {
